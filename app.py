@@ -15,16 +15,20 @@ def before_request():
 @app.route('/')
 def index():
     status = None
+    level = None
     try:
         status = session['login_id']
+        level = session['level']
+        user = session['user']
     except:
         status = None
-    
+        level = None  
+        user = None  
     if not status:
         return redirect('/login')
     else:
         bug_model = BugModel.query.all()
-        return render_template('index.html', bug_model=bug_model, status=status)
+        return render_template('index.html', bug_model=bug_model, status=status, level=level, user=user)
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -53,6 +57,8 @@ def login():
         user = EmployeeModel.query.filter_by(login_id=login_id).first()
         if user and user.user_password == user_password:
             session['login_id'] = user.login_id
+            session['level'] = user.level
+            session['user'] = user.user
             return redirect('/')
     
     return render_template('login.html')

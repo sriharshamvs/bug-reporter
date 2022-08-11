@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Bug List</h1>
+    <div class="d-flex justify-content-between">
+        <h1>Bug List</h1>
+        <h4>User: {{user}}</h4>
+    </div>
     <div class="col">
         <div class="d-flex justify-content-between">
+            {% if level > 1 %}
             <button
               type="button"
               class="btn btn-primary btn-lg"
@@ -11,6 +15,7 @@
             >
                 Add Bug
             </button>
+            {% endif %}
             {% if status is defined %}
             <button
                 type="button"
@@ -22,52 +27,58 @@
             {% endif %}
         </div>
     </div>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-            <th scope="col">#</th>
-            <th scope="col">Program</th>
-            <th scope="col">Report Type</th>
-            <th scope="col">Severity</th>
-            <th scope="col">Reproducibile</th>
-            <th scope="col">Summary</th>
-            <th scope="col">Problem</th>
-            <th scope="col">Reported By</th>
-            <th scope="col">Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for bug in bug_model %}
+    {% if level > 1 %}
+        <table class="table table-hover">
+            <thead>
                 <tr>
-                    <td>{{bug.id}}</td>
-                    <td>{{bug.program}}</td>
-                    <td>{{bug.report_type}}</td>
-                    <td>{{bug.severity}}</td>
-                    <td>{{bug.reproducible}}</td>
-                    <td>{{bug.summary}}</td>
-                    <td>{{bug.problem}}</td>
-                    <td>{{bug.reported_by}}</td>
-                    <td>{{bug.date}}</td>
-                    <td>
-                        <button
-                            type="button"
-                            class="btn btn-warning"
-                            onclick="redirect('/{{bug.id}}/update')"
-                        >
-                        Update
-                        </button>
-                    </td>
-                    <td>
-                        <button
-                            type="button"
-                            class="btn btn-danger"
-                            onclick="redirect('/{{bug.id}}/delete')"
-                        >
-                        Delete
-                        </button>
-                    </td>
+                <th scope="col">#</th>
+                <th scope="col">Program</th>
+                <th scope="col">Report Type</th>
+                <th scope="col">Severity</th>
+                <th scope="col">Reproducibile</th>
+                <th scope="col">Summary</th>
+                <th scope="col">Problem</th>
+                <th scope="col">Reported By</th>
+                <th scope="col">Date</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for bug in bug_model %}
+                    <tr>
+                        <td>{{bug.id}}</td>
+                        <td>{{bug.program}}</td>
+                        <td>{{bug.report_type}}</td>
+                        <td>{{bug.severity}}</td>
+                        <td>{{bug.reproducible}}</td>
+                        <td>{{bug.summary}}</td>
+                        <td>{{bug.problem}}</td>
+                        <td>{{bug.reported_by}}</td>
+                        <td>{{bug.date}}</td>
+                        {% if user == "admin" %}
+                            <td>
+                                <button
+                                    type="button"
+                                    class="btn btn-warning"
+                                    onclick="redirect('/{{bug.id}}/update')"
+                                >
+                                Update
+                                </button>
+                            </td>
+                            <td>
+                                <button
+                                    type="button"
+                                    class="btn btn-danger"
+                                    onclick="redirect('/{{bug.id}}/delete')"
+                                >
+                                Delete
+                                </button>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h2>No Access to Database</h2>
+    {% endif %}
 {% endblock %}
