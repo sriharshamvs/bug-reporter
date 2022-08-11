@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="POST">
+        <div class="mb-3">
+            <label for="login_id" class="form-label">Login ID</label>
+            <input type="text" class="form-control" id="login_id" name="login_id">
+        </div>
+        <div class="mb-3">
+            <label for="user_password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="user_password" name="user_password">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+{% endblock %}

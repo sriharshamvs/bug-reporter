@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <form action="" method="POST">
+    <div class="row">
+        <div class="col">
+            <label for="program" class="col-form-label"> Program </label>
+        </div>
+        <div class="col">
+            <select class="form-select" aria-label="Select Program" name="program">
+                {% for program in ReportSelectData_Program %}
+                    <option value="{{program}}">{{program}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col">
+            <label for="report_type" class="col-form-label"> Report Type </label>
+        </div>
+        <div class="col">
+            <select class="form-select" aria-label="Select Report Type" name="report_type">
+                {% for report_type in ReportSelectData_Report_Type %}
+                    <option value="{{report_type}}">{{report_type}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col">
+            <label for="severity" class="col-form-label"> Severity </label>
+        </div>
+        <div class="col">
+            <select class="form-select" aria-label="Select Severity" name="severity">
+                {% for severity in ReportSelectData_Report_Severity %}
+                    <option value="{{severity}}">{{severity}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <label for="summary" class="col-form-label">Program Summary</label>
+        </div>
+        <div class="col">
+            <input type="text" class="form-control" id="summary" name="summary">
+        </div>
+        <div class="col">
+            <div class="form-check">
+                <label class="col form-check-label" for="reproducible">
+                    Reproducible ?
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <input class="form-check-input" type="checkbox" id="reproducible" name="reproducible">
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="problem" class="form-label">Problem</label>
+        <textarea class="form-control" id="problem" rows="3" name="problem"></textarea>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <label for="reported_by" class="col-form-label"> Reported By </label>
+        </div>
+        <div class="col">
+            <select class="form-select" aria-label="Select Reported By" name="reported_by">
+                {% for reported_by in ReportSelectData_ReportedBy %}
+                    <option value="{{reported_by}}">{{reported_by}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col">
+            <label for="date" class="col-form-label">Date</label>
+        </div>
+        <div class="col">
+            <input type="text" class="form-control" id="date" name="date">
+        </div>
+    </div>
+
+    <br/>
+    <div class="d-flex justify-content-between">
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        <div class="col-auto">
+            <button type="button" class="btn btn-secondary" onclick="redirect('/')">Cancel</button>
+        </div>
+    </div>
+  </form>
+
+{% endblock %}
