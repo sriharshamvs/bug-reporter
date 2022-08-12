@@ -80,6 +80,52 @@
     </div>
 
     <br/>
+    <hr/>
+    
+    <div class="row">
+        <div class="col">
+            <label for="area">Area</label>
+            <input type="text" class="form-control" name="area">
+        </div>
+        <div class="col">
+            <label for="assigned_to" class="col-form-label"> Assigned To </label>
+            <select class="form-select" aria-label="Select Assigned To" name="assigned_to">
+                {% for reported_by in ReportSelectData_ReportedBy %}
+                    <option value="{{reported_by}}">{{reported_by}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col">
+            <label for="priority" class="col-form-label"> Priority </label>
+            <select class="form-select" aria-label="Select Priority" name="priority" required>
+                {% for severity in ReportSelectData_Report_Severity %}
+                    <option value="{{severity}}">{{severity}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <label for="resolution">Resolution</label>
+            <input type="text" class="form-control" name="resolution">
+        </div>
+        <div class="col">
+            <label for="resolved_by" class="col-form-label"> Resolved By </label>
+            <select class="form-select" aria-label="Select Resolved By" name="resolved_by">
+                {% for reported_by in ReportSelectData_ReportedBy %}
+                    <option value="{{reported_by}}">{{reported_by}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col">
+            <label for="status">Status</label>
+            <select class="form-select" aria-label="Select Status" name="status">
+                <option value="open" selected>open</option>
+                <option value="close">close</option>
+            </select>
+        </div>
+    </div>
+
     <div class="d-flex justify-content-between">
         <div class="col-auto">
           <button type="submit" class="btn btn-primary">Submit</button>
@@ -88,6 +134,7 @@
             <button type="button" class="btn btn-secondary" onclick="redirect('/')">Cancel</button>
         </div>
     </div>
+
   </form>
 
 {% endblock %}

@@ -34,18 +34,23 @@ def index():
             filterby_reported_by = request.form['reported_by'] if request.form['reported_by'] != "Choose..." else None 
             filterby_program = request.form['program'] if request.form['program'] != "Choose..." else None
             filterby_severity = request.form['severity'] if request.form['severity'] != "Choose..." else None
+            filterby_status = request.form['status']
 
             if filterby_reported_by and not filterby_program and filterby_severity:
-                bug_model = BugModel.query.filter_by(reported_by=filterby_reported_by).filter_by(severity=filterby_severity)
+                bug_model = BugModel.query.filter_by(reported_by=filterby_reported_by).filter_by(severity=filterby_severity).filter_by(status=filterby_status)
                
             if filterby_reported_by and not filterby_program and not filterby_severity:
-                bug_model = BugModel.query.filter_by(reported_by=filterby_reported_by)
+                bug_model = BugModel.query.filter_by(reported_by=filterby_reported_by).filter_by(status=filterby_status)
             
             if filterby_program and not filterby_reported_by and not filterby_severity:
-                bug_model = BugModel.query.filter_by(program=filterby_program)
+                bug_model = BugModel.query.filter_by(program=filterby_program).filter_by(status=filterby_status)
             
             if filterby_severity and not filterby_reported_by and not filterby_program:
-                bug_model = BugModel.query.filter_by(severity=filterby_severity)
+                bug_model = BugModel.query.filter_by(severity=filterby_severity).filter_by(status=filterby_status)
+
+            if not filterby_reported_by and not filterby_program and not filterby_severity:
+                bug_model = BugModel.query.filter_by(status=filterby_status)
+
             
         return render_template('index.html', bug_model=bug_model, status=status, level=level, user=user, \
                             ReportSelectData_Report_Severity=ReportSelectData_Report_Severity, \
@@ -188,13 +193,24 @@ def create():
         problem = request.form['problem']
         reported_by = request.form['reported_by']
         date = current_date
+        area = request.form['area'] if request.form['area'] else " "
+        assigned_to = request.form['assigned_to'] if request.form['assigned_to'] else " "
+        priority = request.form['priority'] if request.form['priority'] else " "
+        resolution = request.form['resolution'] if request.form['resolution'] else " "
+        resolved_by = request.form['resolved_by'] if request.form['resolved_by'] else " "
+        status = request.form['status'] if request.form['status'] else " "
+
         try:
             if request.form['reproducible']:
                 reproducible = True 
         except:
             reproducible = False
         
-        bug_model = BugModel(program=program, report_type=report_type, severity=severity, reproducible=reproducible, summary=summary, problem=problem, reported_by=reported_by, date=date)
+        bug_model = BugModel(program=program, report_type=report_type, severity=severity, \
+                                reproducible=reproducible, summary=summary, problem=problem, \
+                                reported_by=reported_by, date=date, area=area, assigned_to=assigned_to, \
+                                priority=priority, resolution=resolution, resolved_by=resolved_by, status=status)
+        
         db.session.add(bug_model)
         db.session.commit()
         
@@ -217,6 +233,13 @@ def update(id):
             problem = request.form['problem']
             reported_by = request.form['reported_by']
             date = current_date
+            area = request.form['area'] if request.form['area'] else " "
+            assigned_to = request.form['assigned_to'] if request.form['assigned_to'] else " "
+            priority = request.form['priority'] if request.form['priority'] else " "
+            resolution = request.form['resolution'] if request.form['resolution'] else " "
+            resolved_by = request.form['resolved_by'] if request.form['resolved_by'] else " "
+            status = request.form['status'] if request.form['status'] else " "
+
             try:
                 if request.form['reproducible']:
                     reproducible = True 
@@ -224,8 +247,9 @@ def update(id):
                 reproducible = False
             
             bug_model = BugModel(program=program, report_type=report_type, severity=severity, \
-                                reproducible= reproducible, summary=summary, \
-                                problem=problem, reported_by=reported_by, date=date)
+                                reproducible=reproducible, summary=summary, problem=problem, \
+                                reported_by=reported_by, date=date, area=area, assigned_to=assigned_to, \
+                                priority=priority, resolution=resolution, resolved_by=resolved_by, status=status)
             
             db.session.add(bug_model)
             db.session.commit()

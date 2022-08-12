@@ -75,6 +75,13 @@
                     </select>
                 </div>
                 <div class="col">
+                    <label>FilterBy_Status</label>
+                    <select class="form-select" aria-label="Select Status" name="status">
+                        <option value="open">open</option>
+                        <option value="close">close</option>
+                    </select>
+                </div>
+                <div class="col">
                     <button type="submit" class="btn btn-primary" onclick="redirect('/')">Submit</button>
                 </div>
             </div>
@@ -95,6 +102,12 @@
                 <th scope="col">Problem</th>
                 <th scope="col">Reported By</th>
                 <th scope="col">Date</th>
+                <th scope="col">Area</th>
+                <th scope="col">Assigned To</th>
+                <th scope="col">Priority</th>
+                <th scope="col">Resolution</th>
+                <th scope="col">Resolved By</th>
+                <th scope="col">Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -109,6 +122,13 @@
                         <td>{{bug.problem}}</td>
                         <td>{{bug.reported_by}}</td>
                         <td>{{bug.date}}</td>
+                        <td>{{bug.area}}</td>
+                        <td>{{bug.assigned_to}}</td>
+                        <td>{{bug.priority}}</td>
+                        <td>{{bug.resolution}}</td>
+                        <td>{{bug.resolved_by}}</td>
+                        <td>{{bug.status}}</td>
+
                         {% if user == "admin" %}
                             <td>
                                 <button

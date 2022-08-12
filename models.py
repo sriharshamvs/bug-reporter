@@ -51,8 +51,14 @@ class BugModel(db.Model):
     problem = db.Column(db.String())
     reported_by = db.Column(db.String())
     date = db.Column(db.String())
+    area = db.Column(db.String())
+    assigned_to = db.Column(db.String())
+    priority = db.Column(db.String())
+    resolution = db.Column(db.String())
+    resolved_by = db.Column(db.String())
+    status = db.Column(db.String())
 
-    def __init__(self, program, report_type, severity, reproducible, summary, problem, reported_by, date):
+    def __init__(self, program, report_type, severity, reproducible, summary, problem, reported_by, date, area, assigned_to, priority, resolution, resolved_by, status):
         self.program = program
         self.report_type = report_type
         self.severity = severity
@@ -61,6 +67,12 @@ class BugModel(db.Model):
         self.problem = problem
         self.reported_by = reported_by
         self.date = date
+        self.area = area
+        self.assigned_to = assigned_to
+        self.priority = priority
+        self.resolution = resolution
+        self.resolved_by = resolved_by
+        self.status = status
  
     def __repr__(self):
         return f"{self.program} : {self.report_type} : {self.severity} : {self.reproducible} : {self.summary} : {self.problem} : {self.reported_by} : {self.date}"
