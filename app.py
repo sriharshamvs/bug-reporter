@@ -4,7 +4,7 @@ from constants import ReportSelectData_Program, ReportSelectData_Report_Type, Re
 from datetime import date as date_function
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///yellow-pages.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bug-hound.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = "SnrWYeG9faB&HeE2hnx9&Cva"
 db.init_app(app)
@@ -13,7 +13,7 @@ db.init_app(app)
 def before_request():
     db.create_all()
 
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def index():
     status = None
     level = None
@@ -29,7 +29,29 @@ def index():
         return redirect('/login')
     else:
         bug_model = BugModel.query.all()
-        return render_template('index.html', bug_model=bug_model, status=status, level=level, user=user)
+        
+        if request.method == "POST":
+            filterby_reported_by = request.form['reported_by'] if request.form['reported_by'] != "Choose..." else None 
+            filterby_program = request.form['program'] if request.form['program'] != "Choose..." else None
+            filterby_severity = request.form['severity'] if request.form['severity'] != "Choose..." else None
+
+            if filterby_reported_by and not filterby_program and filterby_severity:
+                bug_model = BugModel.query.filter_by(reported_by=filterby_reported_by).filter_by(severity=filterby_severity)
+               
+            if filterby_reported_by and not filterby_program and not filterby_severity:
+                bug_model = BugModel.query.filter_by(reported_by=filterby_reported_by)
+            
+            if filterby_program and not filterby_reported_by and not filterby_severity:
+                bug_model = BugModel.query.filter_by(program=filterby_program)
+            
+            if filterby_severity and not filterby_reported_by and not filterby_program:
+                bug_model = BugModel.query.filter_by(severity=filterby_severity)
+            
+        return render_template('index.html', bug_model=bug_model, status=status, level=level, user=user, \
+                            ReportSelectData_Report_Severity=ReportSelectData_Report_Severity, \
+                            ReportSelectData_ReportedBy=ReportSelectData_ReportedBy, \
+                            ReportSelectData_Program=ReportSelectData_Program)
+        
 
 @app.route('/users')
 def users():

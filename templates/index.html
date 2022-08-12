@@ -43,7 +43,46 @@
             {% endif %}
         </div>
     </div>
+    <br/>
     {% if level > 1 %}
+        <form action="" method="POST">
+            <div class="row">
+                <div class="col">
+                    <label>FilterBy_User</label>
+                    <select class="form-select" aria-label="Select Severity" name="reported_by">
+                        <option selected>Choose...</option>
+                        {% for reported in ReportSelectData_ReportedBy %}
+                            <option value="{{reported}}">{{reported}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col">
+                    <label>FilterBy_Program</label>
+                    <select class="form-select" aria-label="Select Severity" name="program">
+                        <option selected>Choose...</option>
+                        {% for program in ReportSelectData_Program %}
+                            <option value="{{program}}">{{program}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col">
+                    <label>FilterBy_Severity</label>
+                    <select class="form-select" aria-label="Select Severity" name="severity">
+                        <option selected>Choose...</option>
+                        {% for severity in ReportSelectData_Report_Severity %}
+                            <option value="{{severity}}">{{severity}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary" onclick="redirect('/')">Submit</button>
+                </div>
+            </div>
+        </form>
+        <div class="col">
+            <button type="submit" class="btn btn-secondary" onclick="redirect('/')">Reset</button>
+        </div>
+        <br/>
         <table class="table table-hover">
             <thead>
                 <tr>
