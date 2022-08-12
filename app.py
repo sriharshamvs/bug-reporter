@@ -194,10 +194,10 @@ def create():
         reported_by = request.form['reported_by']
         date = current_date
         area = request.form['area'] if request.form['area'] else " "
-        assigned_to = request.form['assigned_to'] if request.form['assigned_to'] else " "
-        priority = request.form['priority'] if request.form['priority'] else " "
+        assigned_to = request.form['assigned_to'] if request.form['assigned_to'] != "Choose..." else " "
+        priority = request.form['priority'] if request.form['priority'] != "Choose..." else " "
         resolution = request.form['resolution'] if request.form['resolution'] else " "
-        resolved_by = request.form['resolved_by'] if request.form['resolved_by'] else " "
+        resolved_by = request.form['resolved_by'] if request.form['resolved_by'] != "Choose..." else " "
         status = request.form['status'] if request.form['status'] else " "
 
         try:

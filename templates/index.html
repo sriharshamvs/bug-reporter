@@ -78,7 +78,7 @@
                     <label>FilterBy_Status</label>
                     <select class="form-select" aria-label="Select Status" name="status">
                         <option value="open">open</option>
-                        <option value="close">close</option>
+                        <option value="fixed">fixed</option>
                     </select>
                 </div>
                 <div class="col">
@@ -112,44 +112,46 @@
             </thead>
             <tbody>
                 {% for bug in bug_model %}
-                    <tr>
-                        <td>{{bug.id}}</td>
-                        <td>{{bug.program}}</td>
-                        <td>{{bug.report_type}}</td>
-                        <td>{{bug.severity}}</td>
-                        <td>{{bug.reproducible}}</td>
-                        <td>{{bug.summary}}</td>
-                        <td>{{bug.problem}}</td>
-                        <td>{{bug.reported_by}}</td>
-                        <td>{{bug.date}}</td>
-                        <td>{{bug.area}}</td>
-                        <td>{{bug.assigned_to}}</td>
-                        <td>{{bug.priority}}</td>
-                        <td>{{bug.resolution}}</td>
-                        <td>{{bug.resolved_by}}</td>
-                        <td>{{bug.status}}</td>
+                    {% if bug.status != "close" %}
+                        <tr>
+                            <td>{{bug.id}}</td>
+                            <td>{{bug.program}}</td>
+                            <td>{{bug.report_type}}</td>
+                            <td>{{bug.severity}}</td>
+                            <td>{{bug.reproducible}}</td>
+                            <td>{{bug.summary}}</td>
+                            <td>{{bug.problem}}</td>
+                            <td>{{bug.reported_by}}</td>
+                            <td>{{bug.date}}</td>
+                            <td>{{bug.area}}</td>
+                            <td>{{bug.assigned_to}}</td>
+                            <td>{{bug.priority}}</td>
+                            <td>{{bug.resolution}}</td>
+                            <td>{{bug.resolved_by}}</td>
+                            <td>{{bug.status}}</td>
 
-                        {% if user == "admin" %}
-                            <td>
-                                <button
-                                    type="button"
-                                    class="btn btn-warning"
-                                    onclick="redirect('/{{bug.id}}/update')"
-                                >
-                                Update
-                                </button>
-                            </td>
-                            <td>
-                                <button
-                                    type="button"
-                                    class="btn btn-danger"
-                                    onclick="redirect('/{{bug.id}}/delete')"
-                                >
-                                Delete
-                                </button>
-                            </td>
-                        {% endif %}
-                    </tr>
+                            {% if user == "admin" %}
+                                <td>
+                                    <button
+                                        type="button"
+                                        class="btn btn-warning"
+                                        onclick="redirect('/{{bug.id}}/update')"
+                                    >
+                                    Update
+                                    </button>
+                                </td>
+                                <td>
+                                    <button
+                                        type="button"
+                                        class="btn btn-danger"
+                                        onclick="redirect('/{{bug.id}}/delete')"
+                                    >
+                                    Delete
+                                    </button>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endif %}
                 {% endfor %}
             </tbody>
         </table>

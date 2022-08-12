@@ -90,6 +90,7 @@
         <div class="col">
             <label for="assigned_to" class="col-form-label"> Assigned To </label>
             <select class="form-select" aria-label="Select Assigned To" name="assigned_to">
+                <option selected>Choose...</option>
                 {% for reported_by in ReportSelectData_ReportedBy %}
                     <option value="{{reported_by}}">{{reported_by}}</option>
                 {% endfor %}
@@ -97,7 +98,8 @@
         </div>
         <div class="col">
             <label for="priority" class="col-form-label"> Priority </label>
-            <select class="form-select" aria-label="Select Priority" name="priority" required>
+            <select class="form-select" aria-label="Select Priority" name="priority">
+                <option selected>Choose...</option>
                 {% for severity in ReportSelectData_Report_Severity %}
                     <option value="{{severity}}">{{severity}}</option>
                 {% endfor %}
@@ -112,6 +114,7 @@
         <div class="col">
             <label for="resolved_by" class="col-form-label"> Resolved By </label>
             <select class="form-select" aria-label="Select Resolved By" name="resolved_by">
+                <option selected>Choose...</option>
                 {% for reported_by in ReportSelectData_ReportedBy %}
                     <option value="{{reported_by}}">{{reported_by}}</option>
                 {% endfor %}
@@ -122,6 +125,7 @@
             <select class="form-select" aria-label="Select Status" name="status">
                 <option value="open" selected>open</option>
                 <option value="close">close</option>
+                <option value="fixed">fixed</option>
             </select>
         </div>
     </div>

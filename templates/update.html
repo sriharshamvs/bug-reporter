@@ -115,7 +115,7 @@
             <select class="form-select" aria-label="Select Priority" name="priority" required>
                 <option selected>{{bug_model.priority}}</option>
                 {% for severity in ReportSelectData_Report_Severity %}
-                    {% if reported_by != bug_model.priority %}
+                    {% if severity != bug_model.priority %}
                         <option value="{{severity}}">{{severity}}</option>
                     {% endif %}
                 {% endfor %}
@@ -143,6 +143,7 @@
             <select class="form-select" aria-label="Select Status" name="status">
                 <option value="open">open</option>
                 <option value="close">close</option>
+                <option value="fixed">fixed</option>
             </select>
         </div>
     </div>
