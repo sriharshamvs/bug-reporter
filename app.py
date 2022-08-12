@@ -257,6 +257,9 @@ def create_program():
 def update_program(id):
     program = ProgramModel.query.filter_by(id=id).first()
     if request.method == 'POST':
+        db.session.delete(program)
+        db.session.commit()
+        
         program = request.form['program']
         release = request.form['release']
         version = request.form['version']
