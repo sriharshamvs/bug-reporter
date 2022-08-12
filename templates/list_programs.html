@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="d-flex justify-content-between">
+        <h1>Bug List</h1>
+        <h4>User: {{user}}</h4>
+    </div>
+    <div class="col">
+        <div class="d-flex justify-content-between">
+            {% if status is defined %}
+                {% if user == "admin" %}
+                    <button
+                        type="button"
+                        class="btn btn-primary btn-lg"
+                        onclick="redirect('/create_program')"
+                    >
+                        Create Program
+                    </button>
+                {% endif %}
+                <button
+                    type="button"
+                    class="btn btn-primary btn-lg"
+                    onclick="redirect('/logout')"
+                >
+                    Logout
+                </button>
+            {% endif %}
+        </div>
+    </div>
+    {% if user == "admin" %}
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Program</th>
+                <th scope="col">Release</th>
+                <th scope="col">Version</th>
+                <th scope="col">Area</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for program in programs %}
+                    <tr>
+                        <td>{{program.id}}</td>
+                        <td>{{program.program}}</td>
+                        <td>{{program.release}}</td>
+                        <td>{{program.version}}</td>
+                        <td>{{program.area}}</td>
+                        {% if user == "admin" %}
+                            <td>
+                                <button
+                                    type="button"
+                                    class="btn btn-warning"
+                                    onclick="redirect('program/{{program.id}}/update')"
+                                >
+                                Update
+                                </button>
+                            </td>
+                            <td>
+                                <button
+                                    type="button"
+                                    class="btn btn-danger"
+                                    onclick="redirect('program/{{program.id}}/delete')"
+                                >
+                                Delete
+                                </button>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h2>No Access to Database</h2>
+    {% endif %}
+
+{% endblock %}

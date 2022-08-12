@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="POST">
+    <div class="row">
+        <div class="col">
+            <label for="program">Program</label>
+            <input type="text" name="program" required>
+        </div>
+        <div class="col">
+            <label for="release">Release</label>
+            <input type="text" name="release" required>
+        </div>
+        <div class="col">
+            <label for="version">Version</label>
+            <input type="text" name="version" required>
+        </div>
+    </div>
+    <br>
+    <br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="POST">
+    <div class="row">
+        <div class="col">
+            <label for="program">Program</label>
+            <input type="text" name="program" value="{{program.program}}">
+        </div>
+        <div class="col">
+            <label for="release">Release</label>
+            <input type="text" name="release" value="{{program.release}}">
+        </div>
+        <div class="col">
+            <label for="version">Version</label>
+            <input type="text" name="version" value="{{program.version}}">
+        </div>
+    </div>
+    <div>
+        <label for="area">Area</label>
+        <textarea type="textarea" name="area"></textarea>
+    </div>
+    <br>
+    <br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endblock %}

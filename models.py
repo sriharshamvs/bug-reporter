@@ -3,6 +3,24 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
+class ProgramModel(db.Model):
+    __tablename__ = "program"
+
+    id = db.Column(db.Integer, primary_key=True)
+    program = db.Column(db.String())
+    release = db.Column(db.String())
+    version = db.Column(db.String())
+    area = db.Column(db.String())
+
+    def __init__(self, program, release, version, area):
+        self.program = program
+        self.release = release
+        self.version = version
+        self.area = area
+
+    def __repr__(self):
+        return f"{self.program}: {self.release}: {self.version} : {self.area}"
+
 class EmployeeModel(db.Model):
     __tablename__ = "employee"
 
