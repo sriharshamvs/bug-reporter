@@ -17,6 +17,15 @@
             </button>
             {% endif %}
             {% if status is defined %}
+            {% if level > 1 %}
+            <button
+                type="button"
+                class="btn btn-primary btn-lg"
+                onclick="redirect('/create_user')"
+            >
+                CreateUser
+            </button>
+            {% endif %}
             <button
                 type="button"
                 class="btn btn-primary btn-lg"

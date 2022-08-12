@@ -47,6 +47,24 @@ def signup():
 
         return redirect('/login')
 
+
+@app.route('/create_user', methods=['GET', 'POST'])
+def create_user():
+    if request.method == 'GET':
+        return render_template('create_user.html')
+
+    if request.method == 'POST':
+        user = request.form['user']
+        login_id = request.form['login_id']
+        user_password = request.form['user_password']
+        level = request.form['level']
+
+        employee = EmployeeModel(user=user, login_id=login_id, user_password=user_password, level=level)
+        db.session.add(employee)
+        db.session.commit()
+
+        return redirect('/')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -115,7 +133,7 @@ def update(id):
             date = request.form['date']
             
             bug_model = BugModel(program=program, report_type=report_type, severity=severity, \
-                                reproducible=reproducible, summary=summary, \
+                                reproducible= reproducible, summary=summary, \
                                 problem=problem, reported_by=reported_by, date=date)
             
             db.session.add(bug_model)
