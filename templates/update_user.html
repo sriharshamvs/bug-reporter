@@ -4,21 +4,21 @@
     <form method="POST">
         <div>
             <label for="user">User</label>
-            <input type="text" name="user" required>
+            <input type="text" name="user" value="{{employee.user}}" required>
         </div>
         <br>
         <br>
         <div class="mb-3">
             <label for="login_id" class="form-label">Login ID</label>
-            <input type="text" class="form-control" id="login_id" name="login_id" required>
+            <input type="text" class="form-control" id="login_id" name="login_id" value="{{employee.login_id}}" required>
         </div>
         <div class="mb-3">
             <label for="user_password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="user_password" name="user_password" required>
+            <input type="password" class="form-control" id="user_password" name="user_password" value="{{employee.user_password}}" required>
         </div>
         <div>
             <label for="level">Level</label>
-            <input type="text" name="level" required>
+            <input type="text" name="level" value="{{employee.level}}" required>
         </div>
         <br>
         <br>

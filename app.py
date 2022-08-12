@@ -30,23 +30,23 @@ def index():
         bug_model = BugModel.query.all()
         return render_template('index.html', bug_model=bug_model, status=status, level=level, user=user)
 
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
-    if request.method == 'GET':
-        return render_template('signup.html')
-    
-    if request.method == 'POST':
-        user = request.form['user']
-        login_id = request.form['login_id']
-        user_password = request.form['user_password']
-        level = request.form['level']
-
-        employee = EmployeeModel(user=user, login_id=login_id, user_password=user_password, level=level)
-        db.session.add(employee)
-        db.session.commit()
-
+@app.route('/users')
+def users():
+    status = None
+    level = None
+    try:
+        status = session['login_id']
+        level = session['level']
+        user = session['user']
+    except:
+        status = None
+        level = None  
+        user = None  
+    if not status:
         return redirect('/login')
-
+    else:
+        users = EmployeeModel.query.all()
+        return render_template('users.html', users=users, status=status, level=level, user=user)
 
 @app.route('/create_user', methods=['GET', 'POST'])
 def create_user():
@@ -59,11 +59,50 @@ def create_user():
         user_password = request.form['user_password']
         level = request.form['level']
 
-        employee = EmployeeModel(user=user, login_id=login_id, user_password=user_password, level=level)
-        db.session.add(employee)
-        db.session.commit()
+        if  not user or not login_id or not user_password or not level:
+            return render_template('error.html')
+        else:    
+            employee = EmployeeModel(user=user, login_id=login_id, user_password=user_password, level=level)
+            db.session.add(employee)
+            db.session.commit()
 
-        return redirect('/')
+            return redirect('/')
+
+
+@app.route('/user/<int:id>/update', methods=['GET', 'POST'])
+def update_user(id):
+    employee = EmployeeModel.query.filter_by(id=id).first()
+    if request.method == 'POST':
+        if employee:
+            db.session.delete(employee)
+            db.session.commit()
+            
+            user = request.form['user']
+            login_id = request.form['login_id']
+            user_password = request.form['user_password']
+            level = request.form['level']
+            
+            employee = EmployeeModel(user=user, login_id=login_id, user_password=user_password, level=level)
+            
+            db.session.add(employee)
+            db.session.commit()
+            return redirect('/')
+        return f"Employee with id = {id} Does not exist"
+ 
+    return render_template('update_user.html', employee=employee)
+
+
+@app.route('/user/<int:id>/delete', methods=['GET'])
+def delete_user(id):
+    employee = EmployeeModel.query.filter_by(id=id).first()
+    if request.method == 'GET':
+        if employee:
+            db.session.delete(employee)
+            db.session.commit()
+            return redirect('/')
+        abort(404)
+ 
+    return redirect('/')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
