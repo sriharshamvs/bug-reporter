@@ -8,7 +8,7 @@
             <label for="program" class="col-form-label"> Program </label>
         </div>
         <div class="col">
-            <select class="form-select" aria-label="Select Program" name="program">
+            <select class="form-select" aria-label="Select Program" name="program" required>
                 {% for program in ReportSelectData_Program %}
                     <option value="{{program}}">{{program}}</option>
                 {% endfor %}
@@ -18,7 +18,7 @@
             <label for="report_type" class="col-form-label"> Report Type </label>
         </div>
         <div class="col">
-            <select class="form-select" aria-label="Select Report Type" name="report_type">
+            <select class="form-select" aria-label="Select Report Type" name="report_type" required>
                 {% for report_type in ReportSelectData_Report_Type %}
                     <option value="{{report_type}}">{{report_type}}</option>
                 {% endfor %}
@@ -28,7 +28,7 @@
             <label for="severity" class="col-form-label"> Severity </label>
         </div>
         <div class="col">
-            <select class="form-select" aria-label="Select Severity" name="severity">
+            <select class="form-select" aria-label="Select Severity" name="severity" required>
                 {% for severity in ReportSelectData_Report_Severity %}
                     <option value="{{severity}}">{{severity}}</option>
                 {% endfor %}
@@ -41,7 +41,7 @@
             <label for="summary" class="col-form-label">Program Summary</label>
         </div>
         <div class="col">
-            <input type="text" class="form-control" id="summary" name="summary">
+            <input type="text" class="form-control" id="summary" name="summary" required>
         </div>
         <div class="col">
             <div class="form-check">
@@ -57,7 +57,7 @@
 
     <div class="mb-3">
         <label for="problem" class="form-label">Problem</label>
-        <textarea class="form-control" id="problem" rows="3" name="problem"></textarea>
+        <textarea class="form-control" id="problem" rows="3" name="problem" required></textarea>
     </div>
 
     <div class="row">
@@ -65,7 +65,7 @@
             <label for="reported_by" class="col-form-label"> Reported By </label>
         </div>
         <div class="col">
-            <select class="form-select" aria-label="Select Reported By" name="reported_by">
+            <select class="form-select" aria-label="Select Reported By" name="reported_by" required>
                 {% for reported_by in ReportSelectData_ReportedBy %}
                     <option value="{{reported_by}}">{{reported_by}}</option>
                 {% endfor %}
@@ -75,7 +75,7 @@
             <label for="date" class="col-form-label">Date</label>
         </div>
         <div class="col">
-            <input type="text" class="form-control" id="date" name="date">
+            <input type="text" class="form-control" id="date" name="date" value="{{current_date}}" required>
         </div>
     </div>
 

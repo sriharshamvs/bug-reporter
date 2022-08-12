@@ -9,8 +9,11 @@
         </div>
         <div class="col">
             <select class="form-select" aria-label="Select Program" name="program">
+                <option selected>{{bug_model.program}}</option>
                 {% for program in ReportSelectData_Program %}
-                    <option value="{{program}}">{{program}}</option>
+                    {% if program != bug_model.program %}
+                        <option value="{{program}}">{{program}}</option>
+                    {% endif %}
                 {% endfor %}
             </select>
         </div>
@@ -19,8 +22,11 @@
         </div>
         <div class="col">
             <select class="form-select" aria-label="Select Report Type" name="report_type">
+                <option selected>{{bug_model.report_type}}</option>
                 {% for report_type in ReportSelectData_Report_Type %}
-                    <option value="{{report_type}}">{{report_type}}</option>
+                    {% if report_type != bug_model.report_type %}
+                        <option value="{{report_type}}">{{report_type}}</option>
+                        {% endif %}
                 {% endfor %}
             </select>
         </div>
@@ -29,8 +35,11 @@
         </div>
         <div class="col">
             <select class="form-select" aria-label="Select Severity" name="severity">
+                <option selected>{{bug_model.severity}}</option>
                 {% for severity in ReportSelectData_Report_Severity %}
-                    <option value="{{severity}}">{{severity}}</option>
+                    {% if severity != bug_model.severity %}
+                        <option value="{{severity}}">{{severity}}</option>
+                    {% endif %}
                 {% endfor %}
             </select>
         </div>
@@ -57,7 +66,7 @@
 
     <div class="mb-3">
         <label for="problem" class="form-label">Problem</label>
-        <textarea class="form-control" id="problem" rows="3" name="problem" value="{{bug_model.problem}}"></textarea>
+        <textarea class="form-control" id="problem" rows="3" name="problem">{{bug_model.problem}}</textarea>
     </div>
 
     <div class="row">
@@ -66,8 +75,11 @@
         </div>
         <div class="col">
             <select class="form-select" aria-label="Select Reported By" name="reported_by">
+                <option selected>{{bug_model.reported_by}}</option>
                 {% for reported_by in ReportSelectData_ReportedBy %}
-                    <option value="{{reported_by}}">{{reported_by}}</option>
+                    {% if reported_by != bug_model.severity %}
+                        <option value="{{reported_by}}">{{reported_by}}</option>
+                    {% endif %}
                 {% endfor %}
             </select>
         </div>

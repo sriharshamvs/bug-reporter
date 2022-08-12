@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, session, url_for, abort, session
 from models import db, EmployeeModel, BugModel, ProgramModel
 from constants import ReportSelectData_Program, ReportSelectData_Report_Type, ReportSelectData_Report_Severity, ReportSelectData_ReportedBy
+from datetime import date as date_function
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///yellow-pages.db'
@@ -150,11 +151,12 @@ def logout():
 
 @app.route('/create/', methods=['GET', 'POST'])
 def create():
+    current_date = today = date_function.today().isoformat()
     if request.method == 'GET':
         return render_template('create.html', ReportSelectData_Program=ReportSelectData_Program, \
                 ReportSelectData_Report_Type=ReportSelectData_Report_Type, \
                 ReportSelectData_Report_Severity=ReportSelectData_Report_Severity, \
-                ReportSelectData_ReportedBy=ReportSelectData_ReportedBy)
+                ReportSelectData_ReportedBy=ReportSelectData_ReportedBy, current_date=current_date)
     
     if request.method == 'POST':
         program = request.form['program']
@@ -163,10 +165,11 @@ def create():
         summary = request.form['summary']
         problem = request.form['problem']
         reported_by = request.form['reported_by']
-        date = request.form['date']
-        if request.form['reproducible']:
-            reproducible = True 
-        else:
+        date = current_date
+        try:
+            if request.form['reproducible']:
+                reproducible = True 
+        except:
             reproducible = False
         
         bug_model = BugModel(program=program, report_type=report_type, severity=severity, reproducible=reproducible, summary=summary, problem=problem, reported_by=reported_by, date=date)
@@ -178,6 +181,7 @@ def create():
 
 @app.route('/<int:id>/update',methods = ['GET','POST'])
 def update(id):
+    current_date = today = date_function.today().isoformat()
     bug_model = BugModel.query.filter_by(id=id).first()
     if request.method == 'POST':
         if bug_model:
@@ -190,7 +194,12 @@ def update(id):
             summary = request.form['summary']
             problem = request.form['problem']
             reported_by = request.form['reported_by']
-            date = request.form['date']
+            date = current_date
+            try:
+                if request.form['reproducible']:
+                    reproducible = True 
+            except:
+                reproducible = False
             
             bug_model = BugModel(program=program, report_type=report_type, severity=severity, \
                                 reproducible= reproducible, summary=summary, \
@@ -201,7 +210,10 @@ def update(id):
             return redirect('/')
         return f"Bug with id = {id} Does not exist"
  
-    return render_template('update.html', bug_model=bug_model)
+    return render_template('update.html', bug_model=bug_model, ReportSelectData_Program=ReportSelectData_Program, \
+                ReportSelectData_Report_Type=ReportSelectData_Report_Type, \
+                ReportSelectData_Report_Severity=ReportSelectData_Report_Severity, \
+                ReportSelectData_ReportedBy=ReportSelectData_ReportedBy, current_date=current_date)
 
 @app.route('/<int:id>/delete', methods=['GET'])
 def delete(id):
